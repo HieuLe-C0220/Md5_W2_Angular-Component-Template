@@ -1,19 +1,5 @@
-<h2>Today's article</h2>
-<hr>
-<!--<div>-->
-<!--  <a href="{{article.url}}" target="_blank">{{article.title}}</a>-->
-<!--</div>-->
-
-<div *ngFor="let art of articles">
-  <a href="{{art.url}}" target="_blank">{{art.title}}</a>
+<app-menu></app-menu>
+<div>
+  <app-articles></app-articles>
 </div>
-<hr>
-<!--<textarea id="article-title" cols="70"></textarea><br/>-->
-<!--<textarea id="article-url" cols="70"></textarea><br/>-->
-<!--<textarea [(ngModel)]="article.title" cols="70"></textarea><br/>-->
-<!--<textarea [(ngModel)]="article.url" cols="70"></textarea><br/>-->
-
-<textarea [value]="article.title" cols="70" id="article.title"></textarea><br/>
-<textarea [value]="article.url" cols="70" id="article.url"></textarea><br/>
-<button (click)="addArticle()">Add</button><br/>
-@CodeGym, 2020
+<app-footer></app-footer>
