@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {ArticleService} from '../../article.service';
+import {Articles} from '../articles';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {LikesService} from '../likes.service';
+import {ILikes} from '../i-likes';
 
 @Component({
   selector: 'app-articles',
@@ -6,41 +11,43 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./articles.component.css']
 })
 export class ArticlesComponent implements OnInit {
+  articles: Articles[] = [];
+  likes: ILikes[] = [];
   article = {
+    id: null,
     title: '',
-    url: ''
+    url: '',
+    like: 0
   };
-  constructor() { }
+  constructor(private articleService: ArticleService,
+              private likesService: LikesService) { }
 
   ngOnInit(): void {
+    this.articles = this.articleService.getArticle();
+    this.likes = this.likesService.getLikes();
   }
-  articles = [
-    {
-      title: 'The Evolution of Async JavaScript: From Callbacks, to Promises, to Async/Await',
-      url: 'https://medium.freecodecamp.org/the-evolution-of-async-javascript-from-callbacks-to-promises-to-async-await-e73b047f2f40'
-    },
-    {
-      title: 'Game of Life',
-      url: 'https://thefullsnack.com/posts/game-of-life.html'
-    },
-    {
-      title: 'Nguyên tắc thiết kế REST API',
-      url: 'https://medium.com/eway/nguyên-tắc-thiết-kế-rest-api-23add16968d7'
-    },
-    {
-      title: 'Why You Only Need to Test with 5 Users',
-      url: 'https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/'
-    },
-    {
-      title: 'Let’s Build A Web Server. Part 1.',
-      url: 'https://ruslanspivak.com/lsbaws-part1/'
-    }
-  ];
-
   addArticle() {
-    console.log(this.article);
+    this.article.id = (document.getElementById('article.id') as HTMLInputElement).value;
     this.article.title = (document.getElementById('article.title') as HTMLTextAreaElement).value;
     this.article.url = (document.getElementById('article.url') as HTMLTextAreaElement).value;
-    this.articles.push(this.article);
+    this.articles.push(<Articles> this.article);
+    console.log(<Articles> this.article);
+  }
+
+  onClick(id: number){
+    let like = this.getLikeByArticleId(id);
+    for(let i = 0; i< this.likes.length; i++) {
+      if(like === this.likes[i]) {
+        this.likes[i].amountOfLike++;
+      }
+    }
+  }
+
+  getLikeByArticleId(id: number): ILikes {
+    for (let i=0; i<this.likes.length; i++) {
+      if (this.likes[i].article_id == id) {
+        return this.likes[i];
+      }
+    }
   }
 }

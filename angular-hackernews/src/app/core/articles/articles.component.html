@@ -4,17 +4,23 @@
 <!--  <a href="{{article.url}}" target="_blank">{{article.title}}</a>-->
 <!--</div>-->
 
-<div *ngFor="let art of articles">
-  <a href="{{art.url}}" target="_blank">{{art.title}}</a>
+<div>
+  <table *ngFor="let art of articles">
+    <tr><a href="{{art.url}}" target="_blank">{{art.title}}</a></tr>
+    <ng-container *ngFor="let like of likes">
+      <tr *ngIf="art.id == like.article_id">{{like.amountOfLike}} likes <button (click)="onClick(art.id)">Like</button></tr>
+    </ng-container>
+  </table>
 </div>
 <hr>
 <!--<textarea id="article-title" cols="70"></textarea><br/>-->
 <!--<textarea id="article-url" cols="70"></textarea><br/>-->
 <!--<textarea [(ngModel)]="article.title" cols="70"></textarea><br/>-->
 <!--<textarea [(ngModel)]="article.url" cols="70"></textarea><br/>-->
-
+<input [value]="article.id" id="article.id"/><br/>
 <textarea [value]="article.title" cols="70" id="article.title"></textarea><br/>
 <textarea [value]="article.url" cols="70" id="article.url"></textarea><br/>
 <button (click)="addArticle()">Add</button><br/>
+
 
 
